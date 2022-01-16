@@ -1,0 +1,198 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>  
+legend{
+    margin-top: 50px ;
+}
+  .grid-container{
+      display: grid;
+      grid-template-columns: 30% 60%;
+      grid-column-gap: 100px;
+  }
+  
+  .items-container{
+      display: flex;
+      flex-wrap: wrap;
+  }
+  .items{
+      width: 250px;
+      height: auto;
+      margin: 20px;
+  }
+  
+  .h2-2{
+      margin-top: 50px;
+  }
+ 
+  .grid-item-1 h2{
+      margin-left: 20px;
+  }
+  
+  </style>
+
+<legend class="border-bottom mb-4">What are you craving right now?</legend>
+<div class="grid-container">
+  <div class="content-section grid-item grid-item-2">
+    
+    <form method="POST" action="/advanced_handle_form">
+        {{ advancedForm.hidden_tag() }}
+        <fieldset class="form-group">
+            <h2>Basic Search</h2>
+              <div class="form-group">
+                  {{ advancedForm.keyword.label(class="form-control-label") }}
+  
+                  {% if advancedForm.keyword.errors %}
+                      {{ advancedForm.keyword(class="form-control form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in advancedForm.keyword.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ advancedForm.keyword(class="form-control form-control-lg") }}
+                  {% endif %}
+              </div>
+              <div class="form-group">
+                  {{ advancedForm.location.label(class="form-control-label") }}
+                  {% if advancedForm.location.errors %}
+                      {{ advancedForm.location(class="form-control form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in advancedForm.location.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ advancedForm.location(class="form-control form-control-lg") }}
+                  {% endif %}
+              </div>
+  
+            <h2 class='h2-2'>Advanced Search</h2>
+            <b>Graph Traversal</b>
+            <div class="form-group">
+                {{ advancedForm.restaurant01.label(class="form-control-label") }}
+    
+                {% if advancedForm.restaurant01.errors %}
+                    {{ advancedForm.restaurant01(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in advancedForm.restaurant01.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ advancedForm.restaurant01(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+  
+            <div>
+                {% if advancedForm.traversal.errors %}
+                    {{ advancedForm.traversal() }}
+                    <div class="invalid-feedback">
+                        {% for error in advancedForm.traversal.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ advancedForm.traversal() }}
+                {% endif %}
+            </div>
+            
+            
+            <b>Graph Shortest Path</b>
+            <div class="form-group">
+                {{ advancedForm.restaurant02.label(class="form-control-label") }}
+    
+                {% if advancedForm.restaurant02.errors %}
+                    {{ advancedForm.restaurant02(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in advancedForm.restaurant02.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ advancedForm.restaurant02(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+  
+            <div class="form-group">
+                {{ advancedForm.restaurant03.label(class="form-control-label") }}
+    
+                {% if advancedForm.restaurant03.errors %}
+                    {{ advancedForm.restaurant03(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in advancedForm.restaurant03.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ advancedForm.restaurant03(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+  
+            
+            <div>
+                {% if advancedForm.shortest_path.errors %}
+                    {{ advancedForm.shortest_path() }}
+                    <div class="invalid-feedback">
+                        {% for error in advancedForm.shortest_path.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ advancedForm.shortest_path() }}
+                {% endif %}
+            </div>
+       
+         
+        </fieldset>
+        <div class="form-group">
+            {{ advancedForm.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+
+
+  </div>
+
+  <div class='grid-item grid-item-1'>
+    <h2>Restaurants similar to {{restaurant01}}</h2>
+    <div class='items-container'>
+
+    {% for item in data %}
+    {% for traversal in traversal_list %}
+    {% if item['name']== traversal%}
+    <div class='items'>
+      <b>{{item['name']}}</b></br>
+      Rating: {{item['rating']}}<br> 
+      Address: {{item['location']['address1']}}<br> 
+      Phone: {{item['display_phone']}}<br><br> 
+    </div>
+    {% endif %}
+    {% endfor %}  
+    {% endfor %}
+
+  </div>
+  <div class='items-container'>
+    <h2>Shortest Path from {{restaurant02}} to {{restaurant03}}</h2>
+      {% for shortest_path in shortest_path_list %}
+      {% for item in data %}
+      {% if item['name']== shortest_path%}
+      <div class='items'>
+        <b>{{item['name']}}</b></br>
+        Rating: {{item['rating']}}<br> 
+        Address: {{item['location']['address1']}}<br> 
+        Phone: {{item['display_phone']}}<br><br> 
+      </div>
+     
+      {% endif %}
+      {% endfor %}  
+      {% endfor %}
+    </div>
+  
+  </div>
+
+  
+</div>
+
+
+
+
+{% endblock content %}

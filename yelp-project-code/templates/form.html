@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>  
+
+    legend{
+        margin-top: 50px ;
+    }
+    
+    .grid-container{
+   
+        display: grid;
+        grid-template-columns: 30% 60%;
+        grid-column-gap: 100px;
+    }
+    
+ 
+    .h2-2{
+        margin-top: 50px;
+    }
+    
+    .grid-item-1 h2{
+        margin-left: 20px;
+    }
+    
+    </style>
+<legend class="border-bottom mb-4">What are you craving right now?</legend>
+<div class="grid-container">
+    <div class="content-section grid-item grid-item-2">
+        <form method="POST" action="/handle_form">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                
+                <h2>Basic Search</h2>
+                <div class="form-group">
+                    {{ form.keyword.label(class="form-control-label") }}
+    
+                    {% if form.keyword.errors %}
+                        {{ form.keyword(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.keyword.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.keyword(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.location.label(class="form-control-label") }}
+                    {% if form.location.errors %}
+                        {{ form.location(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.location.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.location(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+    
+               
+             
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    <div class='grid-item grid-item-1'>
+        <p>
+            This program matches users preferences with recommended restaurants, and returns information about restaurants connectivity and the shortest paths between restaurants in the network. 
+            Users are able to type in the type of restaurants and locations they are looking for in the form, and choose one of the graph traversals (bfs/ dfs) and 
+            shortest path algorithms (bellman ford/ dijkstra) to get the similar restaurants and shortest paths between two restaurants.
+        </p>
+        <h3>I. Intructions</h3>
+        <h5>Required modules</h5>
+        <ul>
+            <li>json</li>
+            <li>urllib3</li>
+            <li>requests</li>
+            <li>flask</li>
+            <li>geopy.distance</li>
+            <li>heapq</li>
+        </ul>
+        <h5>API key</h5>
+        <p>Your private API Key will be automatically generated after you create your app on Yelp developer. For detailed instructions, refer to Yelp’s authentication guide.</p>
+        <h5>Run the program</h5>
+        <p>Run python3 checkpoint_advanced.py on terminal</p>
+        <h3>II. Interaction Options</h3>
+        <h5>Basic Search</h5>
+        <p>Type in the type of restaurants and locations you are looking for in the form. The program will return a list of restaurants relevant to your preference within the chosen area and render the result on the website.</p>
+        <h5>Advanced Search </h5>
+        <p>This advanced search is based on the graph database from your basic search result.</p>
+        <h6>1. Graph traversal</h6>
+        <p>After basic search, choose one restaurant from your basic search result and choose a graph traversal algorithm, BFS or DFS, the program will return a list of restaurants that are connected to your chosen restaurant.</p>
+        <h6>2. Shortest Path</h6>
+        <p>After basic search, choose two restaurants (from A restaurant to B restaurant) from your basic search result and choose a shortest path algorithm, Bellman-Ford or Dijkstra’s. The program will return the shortest path from A restaurant to B restaurant.</p>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
