@@ -5,8 +5,8 @@ from flask import Flask, render_template, request, url_for, flash, redirect, ses
 from forms import Form, AdvancedFrom
 
 app = Flask(__name__) 
-app.config['SECRET_KEY'] = '0b89e2f14c2189a2be7819d640b2075b'
-api_key='SxOxKdawqFdhHAKaip1KGaHDNXkNGnFe605QrTccomdvxM2lziawBLaqtqpmk0CdiQArtufkA5ovEJnyAlk9fVkpdgpQhoW6dUGi_itrON7QgupCkyj9WiNgpFOkYXYx'
+app.config['SECRET_KEY'] = #add your secret key
+api_key= #add your api key
 
 
 #all the backend functions:
